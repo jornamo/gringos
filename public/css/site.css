@@ -22,14 +22,24 @@ ul.customizedSelect{
 	float:left;
 	padding:0;
 	margin:0;
+	cursor:pointer;
 }
 	ul.customizedSelect li{list-style:none;}
 	ul.customizedSelect li:first-child{float:right;}
+	ul.customizedSelect li:first-child span.selectArrow{
+		background:url('../images/icons/select-arrow.png') no-repeat 0 0 transparent;
+		height:18px;
+		width:25px;
+		display:block;
+	}
 	ul.customizedSelect li.selected{
-		padding:5px;
-		background:red;
-		margin-right:5px;
+		padding:2px;
 		float:left;
+		font-size:11px;
+		background:#fff;
+		border:1px solid #000;
+		min-width:50px;
+		border-radius:2px;
 	}
 	ul.customizedSelect li.dropdownHolder{clear:both;}
 		ul.customizedSelect li.dropdownHolder ul{

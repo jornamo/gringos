@@ -41,7 +41,7 @@ function initCustomizedSelectMenus(mySelectArr){
 	
 		mySelectHtml = '<ul class="customizedSelect '+id+'">';
 		mySelectHtml += '<li class="openDropdown">';
-		mySelectHtml += '<span class="selectArrow">-></span>';
+		mySelectHtml += '<span class="selectArrow"></span>';
 		mySelectHtml += '</li>';
 		mySelectHtml += '<li class="selected openDropdown">';
 		mySelectHtml += '<a >Välj...</a>';
@@ -72,6 +72,7 @@ function initCustomizedSelectMenus(mySelectArr){
 		$(this).closest('ul.customizedSelect').find('li.selected').html('<a class='+selectedValue+'>'+selectedName+'</a>');
 		submitMe = $(this).closest('ul.customizedSelect').find('li.selected a');
 		submitSelect(submitMe);
+		$(this).parent('ul').hide();
 	});
 	
 	/*Submit value*/
@@ -111,6 +112,6 @@ $(document).ready(function(){
 	/*Create cutomized select menus
 	 * To cusomize select menu add the selector here
 	 * You need to specify the exact selec menu so i recomend use a id*/
-	var mySelectArr = [$("select#one")];
+	var mySelectArr = [$("select#lang")];
 	initCustomizedSelectMenus(mySelectArr);
 });
