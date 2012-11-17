@@ -8,17 +8,21 @@ function initCustomizedRadios(){
 
 	radios.each(function(){
 		/*Hide all the standard radios in the page*/
+		
 		$(this).hide();	
+		/*Get the name och the radio*/
 		radioGroupName = $(this).attr('name');
 		
 		/*
 		 * For each radiobutton select the parent of the radiobutton and add a <span> with the 
-		 * name of the radio and a class wich have the image of the customized radio
-		 * 																						*/
-		$(this).parent().append('<span class="'+className+'" name="'+radioGroupName+'"></span>');
-		customRadio = $(this).siblings('span.'+className).addClass(radioGroupName).attr('name', radioGroupName);
+		 * name of the radio and a class wich have the image of the customized radio and the name of the original radio
+		 * 																													*/
+		
+		$(this).parent().append('<span class="'+className+' '+ radioGroupName +'" name="'+radioGroupName+'"></span>');
 		
 		/*When page is loaded if any radio is selected show the selected customized button*/
+		customRadio = $(this).siblings('span.'+className+'.'+ radioGroupName).attr('name', radioGroupName);
+		
 		if($(this).is(':checked') || $(this).attr('checked') == 'checked' ){
 			customRadio.addClass(selectedRadio)
 		}else{
@@ -38,8 +42,6 @@ function initCustomizedRadios(){
 		$(this).addClass(selectedRadio).siblings(radios).attr(checked,checked);
 	});
 }
-
-
 
 /*
  * INITIALIZE ALL FUNCTIONS HERE WHEN DOCUMENT IS READY
