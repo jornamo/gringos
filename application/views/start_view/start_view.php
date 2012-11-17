@@ -1,12 +1,8 @@
 <div id="wrapper">
 	<div id="container">
-		<span>
-			Radio1
-			<input type="radio" name="test" />
-		</span>
-		<span>
-			Radio2
-			<input type="radio" name="test" />
-		</span>
+		<select id="one">
+			<option value="val1">Etwi</option>
+			<option value="val2">Etwi2</option>
+		</select>
 	</div>
 </div>

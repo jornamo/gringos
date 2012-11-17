@@ -1,26 +1,15 @@
 function initCustomizedRadios(){
-	var 
-		radios = $('input[type="radio"]'),
+	var radios = $('input[type="radio"]'),
 		radioGroupName,
 		className = 'customizedRadio',
 		selectedRadio = 'selected',
 		checked = 'checked';
 
-	radios.each(function(){
-		/*Hide all the standard radios in the page*/
-		
+	radios.each(function(){		
 		$(this).hide();	
-		/*Get the name och the radio*/
 		radioGroupName = $(this).attr('name');
 		
-		/*
-		 * For each radiobutton select the parent of the radiobutton and add a <span> with the 
-		 * name of the radio and a class wich have the image of the customized radio and the name of the original radio
-		 * 																													*/
-		
 		$(this).parent().append('<span class="'+className+' '+ radioGroupName +'" name="'+radioGroupName+'"></span>');
-		
-		/*When page is loaded if any radio is selected show the selected customized button*/
 		customRadio = $(this).siblings('span.'+className+'.'+ radioGroupName).attr('name', radioGroupName);
 		
 		if($(this).is(':checked') || $(this).attr('checked') == 'checked' ){
@@ -29,11 +18,7 @@ function initCustomizedRadios(){
 			customRadio.removeClass(selectedRadio)
 		}
 	});	
-	
-	/* Add click function on all spans with the name customizedRadio
-	 * Get the currentName och the clicked customizedRadio and check if any other customizedRadio has the same name it its class
-	 * Loop throug all the radios with the currentName and remove selectedRadio class from it and at the and add selectedRadio class
-	 * To the customizedRadio we clicked on and add checked attribute to its real hidden input radio */
+
 	radios.siblings('span.'+className).click(function(){
 		var  currentName = $(this).attr('name');
 		radios.siblings('span.'+className+'.'+currentName).each(function(){
@@ -43,6 +28,79 @@ function initCustomizedRadios(){
 	});
 }
 
+function initCustomizedSelectMenus(mySelectArr){
+	for(var i = 0; i< mySelectArr.length; i++){
+	var
+		id = mySelectArr[i].attr('id'),
+		selectedValue = "selected",
+		optionsVal,
+		optionsTxt,
+		mySelectHtml;
+		
+		mySelectArr[i].hide()
+	
+		mySelectHtml = '<ul class="customizedSelect '+id+'">';
+		mySelectHtml += '<li class="openDropdown">';
+		mySelectHtml += '<span class="selectArrow">-></span>';
+		mySelectHtml += '</li>';
+		mySelectHtml += '<li class="selected openDropdown">';
+		mySelectHtml += '<a >Välj...</a>';
+		mySelectHtml += '</li>';
+		mySelectHtml += '<li class="dropdownHolder">';
+		mySelectHtml += '<ul class="dropdown'+id+'" style="display:none">';
+		/*Loop through all options and make li elements of it*/
+		mySelectArr[i].find('option').each(function(){
+			optionsVal = $(this).attr('value'),
+			optionsTxt = $(this).text();
+			mySelectHtml += '<li class='+optionsVal+'>'+optionsTxt+'</li>';
+		});
+		
+		mySelectHtml += '</ul>';
+		mySelectHtml += '</li>';
+		mySelectHtml += '</ul>';
+
+		mySelectArr[i].parent().append(mySelectHtml);
+	}
+	
+	/*Update selected value*/
+	$('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li').click(function(){
+		var
+			selectedValue = $(this).attr('class'),
+			selectedName = $(this).text(),
+			submitMe;
+		
+		$(this).closest('ul.customizedSelect').find('li.selected').html('<a class='+selectedValue+'>'+selectedName+'</a>');
+		submitMe = $(this).closest('ul.customizedSelect').find('li.selected a');
+		submitSelect(submitMe);
+	});
+	
+	/*Submit value*/
+	submitSelect = function(submitMe){
+		var 
+			val = submitMe.attr("class"),
+			text = submitMe.text();
+
+		/*
+		 * TODO
+		 * Send value to controller*/
+	}
+
+	$('ul.customizedSelect').find('li.openDropdown').click(function(){
+		obj = $(this);
+		dropDownShowHide(obj);
+	})
+	
+	/*Open/Close select list*/
+	dropDownShowHide = function(obj){
+		var dropdown = obj.siblings('li.dropdownHolder').find('ul');
+		if(dropdown.css('display')=='none'){
+			dropdown.show();
+		}else{
+			dropdown.hide()
+		}
+	}
+}
+
 /*
  * INITIALIZE ALL FUNCTIONS HERE WHEN DOCUMENT IS READY
  * 														*/
@@ -50,4 +108,9 @@ $(document).ready(function(){
 	/*Creates customized radiobuttons*/
 	initCustomizedRadios();
 	
+	/*Create cutomized select menus
+	 * To cusomize select menu add the selector here
+	 * You need to specify the exact selec menu so i recomend use a id*/
+	var mySelectArr = [$("select#one")];
+	initCustomizedSelectMenus(mySelectArr);
 });

@@ -2,6 +2,7 @@ body{
 	
 }
 
+/* Customized radiobuttons */
 .customizedRadio{
 	background:url('../images/icons/radio.png') no-repeat 0 0 transparent;
 	display:block;
@@ -14,3 +15,25 @@ body{
 	height:10px;
 	width:10px;
 }
+
+/*Customized select menus*/
+
+ul.customizedSelect{
+	float:left;
+	padding:0;
+	margin:0;
+}
+	ul.customizedSelect li{list-style:none;}
+	ul.customizedSelect li:first-child{float:right;}
+	ul.customizedSelect li.selected{
+		padding:5px;
+		background:red;
+		margin-right:5px;
+		float:left;
+	}
+	ul.customizedSelect li.dropdownHolder{clear:both;}
+		ul.customizedSelect li.dropdownHolder ul{
+			padding:0;
+			list-style:none;
+		}
+			ul.customizedSelect li.dropdownHolder ul li{float:none;}
