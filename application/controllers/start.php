@@ -12,7 +12,7 @@ class Start extends CI_Controller {
 		$data['css'] = $this->load->view('tags/css_tags', NULL, TRUE);
 		$data['javascript'] = $this->load->view('tags/javascript_tags', NULL, TRUE);
 		$data['metas'] = $this->load->view('tags/meta_tags', NULL, TRUE);
-		/*Loads overall content and header*/
+		/*Loads overall header*/
 		$data['header'] = $this->load->view('tags/header_tag', NULL, TRUE);
 
 		/*The content variable should be different for every page but the rest is the same because we will show header
@@ -23,5 +23,13 @@ class Start extends CI_Controller {
 		$data['footer'] = $this->load->view('tags/footer_tag', NULL, TRUE);
 		/*loads whole page*/
 		$this->load->view('template', $data);		
+	}
+	
+	public function test()
+	{
+		/*Reciving the data sended from the select menu. Now we can do what ever we want from this data*/
+		$langCode = $_POST['langCode'];
+		$langName = $_POST['langName'];
+		echo $langCode." ".$langName;
 	}
 }

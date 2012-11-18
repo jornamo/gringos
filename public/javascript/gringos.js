@@ -21,7 +21,7 @@ function initCustomizedRadios(){
 	});	
 
 	radios.siblings('span.'+className).click(function(){
-		var  currentName = $(this).attr('name');
+		var currentName = $(this).attr('name');
 		radios.siblings('span.'+className+'.'+currentName).each(function(){
 			$(this).removeClass(selectedRadio);
 		});
@@ -39,7 +39,7 @@ function initCustomizedSelectMenus(mySelectArr){
 		optionsTxt,
 		mySelectHtml;
 		
-		mySelectArr[i].hide()
+		mySelectArr[i].hide();
 	
 		mySelectHtml = '<ul class="customizedSelect '+id+'">';
 		mySelectHtml += '<li class="openDropdown">';
@@ -80,12 +80,18 @@ function initCustomizedSelectMenus(mySelectArr){
 	/*Submit value*/
 	submitSelect = function(submitMe){
 		var 
-			val = submitMe.attr("class"),
-			text = submitMe.text();
+			langCode = submitMe.attr("class"),
+			langName = submitMe.text();
 
-		/*
-		 * TODO
-		 * Send value to controller*/
+		$.ajax({
+			url:'index.php/start/test',
+			type:'POST',
+			data:{langCode:langCode, langName:langName},
+			success:function(data){
+				/*We send the data to the controller and get the value back*/
+				console.log(data);
+			}
+		});
 	}
 
 	$('ul.customizedSelect').find('li.openDropdown').click(function(){
@@ -99,7 +105,7 @@ function initCustomizedSelectMenus(mySelectArr){
 		if(dropdown.css('display')=='none'){
 			dropdown.show();
 		}else{
-			dropdown.hide()
+			dropdown.hide();
 		}
 	}
 }
