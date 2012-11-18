@@ -2,16 +2,16 @@
 <h3>Navigation start here</h3>
 	<ul class="nav">
 		<li>
-			<a>1</a>
+			<a href="">Start</a>
 		</li>
 		<li>
-			<a>2</a>
+			<a href="">Om oss</a>
 		</li>
 		<li>
-			<a>3</a>
+			<a href="">Portfolio</a>
 		</li>
 		<li>
-			<a>4</a>
+			<a href="">Kontakt</a>
 		</li>
 	</ul>
 </div>
