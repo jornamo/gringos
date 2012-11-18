@@ -8,11 +8,7 @@
 	</head>
 	<body>
 		<div id="header-wrapper">
-			<div id="header">
-				<div class="site-logo">
-					<a href=""><img src="<?php echo base_url()?>public/images/gringo-logo.png"/></a>
-				</div> 
-			</div>
+			<?php echo $header;?>
 		</div>
 		
 		<div id="wrapper">
@@ -21,6 +17,7 @@
 					<?php echo $content;?>
 				</div>
 			</div>
+			<?php echo $footer;?>
 		</div>
 	</body>
 </html>
