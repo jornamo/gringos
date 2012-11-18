@@ -1,3 +1,4 @@
+/*Customize radio buttons*/
 function initCustomizedRadios(){
 	var radios = $('input[type="radio"]'),
 		radioGroupName,
@@ -28,6 +29,7 @@ function initCustomizedRadios(){
 	});
 }
 
+/*Customize standard html select menus*/
 function initCustomizedSelectMenus(mySelectArr){
 	for(var i = 0; i< mySelectArr.length; i++){
 	var
@@ -110,8 +112,8 @@ $(document).ready(function(){
 	initCustomizedRadios();
 	
 	/*Create cutomized select menus
-	 * To cusomize select menu add the selector here
-	 * You need to specify the exact selec menu so i recomend use a id*/
+	 * To cusomize select menu pass the selector for the select menu as a parameter in the array (mySelectArr)
+	 * You need to specify the exact select menu. I recomend use a id*/
 	var mySelectArr = [$("select#lang")];
 	initCustomizedSelectMenus(mySelectArr);
 });
