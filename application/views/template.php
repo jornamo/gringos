@@ -8,7 +8,11 @@
 	</head>
 	<body>
 		<div id="header-wrapper">
-			<div id="header"><h1>Sticky header</h1></div>
+			<div id="header">
+				<div class="site-logo">
+					<a href=""><img src="<?php echo base_url()?>public/images/gringo-logo.png"/></a>
+				</div> 
+			</div>
 		</div>
 		
 		<div id="wrapper">
