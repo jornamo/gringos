@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		
-		<?php include_once '/../tags/javascriptTags.php';?>
-		
-		<?php include_once '/../tags/cssTags.php';?>
-		
-		<meta charset="utf-8">
+	<?php echo $javascript;?>
+	<?php echo $css;?>
+	<?php echo $metas;?>
 		<title><?php echo $title; ?></title>
-		
 	</head>
 	<body>
 		<div id="header-wrapper">
