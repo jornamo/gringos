@@ -64,32 +64,32 @@ function initCustomizedSelectMenus(mySelectArr){
 		mySelectArr[i].parent().append(mySelectHtml);
 	}
 	
-	/*Update selected value*/
+	/*On click submit Selected row*/
 	$('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li').click(function(){
 		var
-			selectedValue = $(this).attr('class'),
-			selectedName = $(this).text(),
-			submitMe;
-		
-		$(this).closest('ul.customizedSelect').find('li.selected').html('<a class='+selectedValue+'>'+selectedName+'</a>');
-		submitMe = $(this).closest('ul.customizedSelect').find('li.selected a');
-		submitSelect(submitMe);
-		$(this).parent('ul').hide();
+		cObj= $(this);
+		langCode = cObj.attr('class'),
+		langName = cObj.text(),
+
+		submitSelect(langName, langCode, cObj);
 	});
+	/*Update selected value*/
+	updateSelectedValue = function(langName, langCode, cObj){
+		cObj.closest('ul.customizedSelect').find('li.selected').html('<a class='+langCode+'>'+langName+'</a>');
+		cObj.parent('ul').hide();
+		
+	}
 	
 	/*Submit value*/
-	submitSelect = function(submitMe){
-		var 
-			langCode = submitMe.attr("class"),
-			langName = submitMe.text();
-
+	submitSelect = function(langName, langCode, cObj){
 		$.ajax({
-			url:'start/test/',
+			url:'index.php/start/test/',
 			type:'POST',
 			data:{langCode:langCode, langName:langName},
+			dataType:'JSON',
 			success: function(data){
-				/*We send the data to the controller and get the value back*/
-				console.log(data);
+			/*We send the data to the controller and get the value back. When the value has arrived we call updateSelectvalue and send the value to update the menu*/
+				updateSelectedValue(data.langName, data.langCode, cObj);
 			}
 		});
 	}
@@ -97,7 +97,7 @@ function initCustomizedSelectMenus(mySelectArr){
 	$('ul.customizedSelect').find('li.openDropdown').click(function(){
 		obj = $(this);
 		dropDownShowHide(obj);
-	})
+	});
 	
 	/*Open/Close select list*/
 	dropDownShowHide = function(obj){

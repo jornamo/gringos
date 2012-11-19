@@ -30,7 +30,13 @@ class Start extends CI_Controller {
 		/*Reciving the data sended from the select menu. Now we can do what ever we want from this data*/
 		$langCode = $_POST['langCode'];
 		$langName = $_POST['langName'];
-		echo $langCode;
-		echo $langName;
+		
+		$langArr = array
+				(
+					'langCode' =>$langCode,
+					'langName' =>$langName
+				);
+		
+		echo json_encode($langArr);
 	}
 }
