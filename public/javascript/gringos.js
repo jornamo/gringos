@@ -110,6 +110,30 @@ function initCustomizedSelectMenus(mySelectArr){
 	}
 }
 
+function initStopEmptyLinks(){
+	$('a').click(function(e){
+		var href = $(this).attr('href');
+		if(href == "#" || href==""){
+			e.preventDefault();
+		}
+	});
+}
+
+function initDropdowns(){
+	$('.trigger').each(function(){
+		var 
+		trigger = $(this).find('.opener'),
+		target = $(this).closest('.trigger').siblings('.target');
+		trigger.click(function(){
+			if(target.css('display')=='none'){
+				target.show();
+			}else{
+				target.hide();
+			}
+		});
+	});
+}
+
 /*
  * INITIALIZE ALL FUNCTIONS HERE WHEN DOCUMENT IS READY
  * 														*/
@@ -122,4 +146,13 @@ $(document).ready(function(){
 	 * You need to specify the exact select menu. I recomend use a id*/
 	var mySelectArr = [$("select#lang")];
 	initCustomizedSelectMenus(mySelectArr);
+	
+	/*Prevent empty links to submit*/
+	initStopEmptyLinks();
+	
+	/*Create dropdown menus
+	 * Whats important here is that when creating a dropdown we have to use a structure like the following
+	 * We need a div or what ever with a trigger class inside the trigger div we need to add a div or what ever
+	 * with a opener class. Outside the trigger div we will create our target(dropdown div).*/
+	initDropdowns();
 });

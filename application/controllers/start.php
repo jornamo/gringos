@@ -39,4 +39,11 @@ class Start extends CI_Controller {
 		
 		echo json_encode($langArr);
 	}
+	
+	public function privateUser(){
+		$data = array('b2bMode'=> false);
+	}
+	public function companyUser(){
+		$data = array('b2bMode'=> true);
+	}
 }
