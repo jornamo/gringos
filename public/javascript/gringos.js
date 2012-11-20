@@ -37,7 +37,8 @@ function initCustomizedSelectMenus(mySelectArr){
 		selectedValue = "selected",
 		optionsVal,
 		optionsTxt,
-		mySelectHtml;
+		mySelectHtml,
+		mySelect;
 		
 		mySelectArr[i].hide();
 	
@@ -51,7 +52,8 @@ function initCustomizedSelectMenus(mySelectArr){
 		mySelectHtml += '<li class="dropdownHolder">';
 		mySelectHtml += '<ul class="dropdown'+id+'" style="display:none">';
 		/*Loop through all options and make li elements of it*/
-		mySelectArr[i].find('option').each(function(){
+		mySelect = $('option',mySelectArr[i]);
+		mySelect.each(function(){
 			optionsVal = $(this).attr('value'),
 			optionsTxt = $(this).text();
 			mySelectHtml += '<li class='+optionsVal+'>'+optionsTxt+'</li>';
@@ -65,7 +67,8 @@ function initCustomizedSelectMenus(mySelectArr){
 	}
 	
 	/*On click submit Selected row*/
-	$('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li').click(function(){
+	var $selectedRow = $('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li');
+	$selectedRow.click(function(){
 		var
 		cObj= $(this);
 		langCode = cObj.attr('class'),
@@ -94,7 +97,8 @@ function initCustomizedSelectMenus(mySelectArr){
 		});
 	}
 
-	$('ul.customizedSelect').find('li.openDropdown').click(function(){
+	var $dropdown = $('ul.customizedSelect').find('li.openDropdown');
+	$dropdown.click(function(){
 		obj = $(this);
 		dropDownShowHide(obj);
 	});
@@ -111,7 +115,8 @@ function initCustomizedSelectMenus(mySelectArr){
 }
 
 function initStopEmptyLinks(){
-	$('a').click(function(e){
+	var $link = $('a');
+	$link.click(function(e){
 		var href = $(this).attr('href');
 		if(href == "#" || href==""){
 			e.preventDefault();
@@ -120,10 +125,12 @@ function initStopEmptyLinks(){
 }
 
 function initDropdowns(){
-	$('.trigger').each(function(){
+	var $triggerHolder = $('.trigger'),
+		targets = $('.target');
+	$triggerHolder.each(function(){
 		var 
-		trigger = $(this).find('.opener'),
-		target = $(this).closest('.trigger').siblings('.target');
+		trigger = $(this).find('.opener', $triggerHolder),
+		target = $(this).closest($triggerHolder).siblings(targets);
 		trigger.click(function(){
 			if(target.css('display')=='none'){
 				target.show();
