@@ -38,7 +38,10 @@ function initCustomizedSelectMenus(mySelectArr){
 		optionsVal,
 		optionsTxt,
 		mySelectHtml,
-		mySelect;
+		mySelect,
+		mySelect = $('option',mySelectArr[i]);
+		val = mySelect.first().attr('value'),
+		name = mySelect.first().text();
 		
 		mySelectArr[i].hide();
 	
@@ -47,12 +50,12 @@ function initCustomizedSelectMenus(mySelectArr){
 		mySelectHtml += '<span class="selectArrow"></span>';
 		mySelectHtml += '</li>';
 		mySelectHtml += '<li class="selected openDropdown">';
-		mySelectHtml += '<a >Välj...</a>';
+		mySelectHtml += '<a class='+val+'>'+name+'</a>'
 		mySelectHtml += '</li>';
 		mySelectHtml += '<li class="dropdownHolder">';
 		mySelectHtml += '<ul class="dropdown'+id+'" style="display:none">';
 		/*Loop through all options and make li elements of it*/
-		mySelect = $('option',mySelectArr[i]);
+		
 		mySelect.each(function(){
 			optionsVal = $(this).attr('value'),
 			optionsTxt = $(this).text();
@@ -70,9 +73,9 @@ function initCustomizedSelectMenus(mySelectArr){
 	var $selectedRow = $('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li');
 	$selectedRow.click(function(){
 		var
-		cObj= $(this);
+		cObj = $(this),
 		langCode = cObj.attr('class'),
-		langName = cObj.text(),
+		langName = cObj.text();
 
 		submitSelect(langName, langCode, cObj);
 	});
@@ -80,13 +83,12 @@ function initCustomizedSelectMenus(mySelectArr){
 	updateSelectedValue = function(langName, langCode, cObj){
 		cObj.closest('ul.customizedSelect').find('li.selected').html('<a class='+langCode+'>'+langName+'</a>');
 		cObj.parent('ul').hide();
-		
 	}
 	
 	/*Submit value*/
 	submitSelect = function(langName, langCode, cObj){
 		$.ajax({
-			url:'index.php/start/test/',
+			url:'index.php/languageController',
 			type:'POST',
 			data:{langCode:langCode, langName:langName},
 			dataType:'JSON',
