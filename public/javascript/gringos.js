@@ -37,7 +37,11 @@ function initCustomizedSelectMenus(mySelectArr){
 		selectedValue = "selected",
 		optionsVal,
 		optionsTxt,
-		mySelectHtml;
+		mySelectHtml,
+		mySelect,
+		mySelect = $('option',mySelectArr[i]);
+		val = mySelect.first().attr('value'),
+		name = mySelect.first().text();
 		
 		mySelectArr[i].hide();
 	
@@ -46,12 +50,13 @@ function initCustomizedSelectMenus(mySelectArr){
 		mySelectHtml += '<span class="selectArrow"></span>';
 		mySelectHtml += '</li>';
 		mySelectHtml += '<li class="selected openDropdown">';
-		mySelectHtml += '<a >Välj...</a>';
+		mySelectHtml += '<a class='+val+'>'+name+'</a>'
 		mySelectHtml += '</li>';
 		mySelectHtml += '<li class="dropdownHolder">';
 		mySelectHtml += '<ul class="dropdown'+id+'" style="display:none">';
 		/*Loop through all options and make li elements of it*/
-		mySelectArr[i].find('option').each(function(){
+		
+		mySelect.each(function(){
 			optionsVal = $(this).attr('value'),
 			optionsTxt = $(this).text();
 			mySelectHtml += '<li class='+optionsVal+'>'+optionsTxt+'</li>';
@@ -64,40 +69,41 @@ function initCustomizedSelectMenus(mySelectArr){
 		mySelectArr[i].parent().append(mySelectHtml);
 	}
 	
-	/*Update selected value*/
-	$('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li').click(function(){
+	/*On click submit Selected row*/
+	var $selectedRow = $('ul.customizedSelect').children('li.dropdownHolder').children('ul').find('li');
+	$selectedRow.click(function(){
 		var
-			selectedValue = $(this).attr('class'),
-			selectedName = $(this).text(),
-			submitMe;
-		
-		$(this).closest('ul.customizedSelect').find('li.selected').html('<a class='+selectedValue+'>'+selectedName+'</a>');
-		submitMe = $(this).closest('ul.customizedSelect').find('li.selected a');
-		submitSelect(submitMe);
-		$(this).parent('ul').hide();
+		cObj = $(this),
+		langCode = cObj.attr('class'),
+		langName = cObj.text();
+
+		submitSelect(langName, langCode, cObj);
 	});
+	/*Update selected value*/
+	updateSelectedValue = function(langName, langCode, cObj){
+		cObj.closest('ul.customizedSelect').find('li.selected').html('<a class='+langCode+'>'+langName+'</a>');
+		cObj.parent('ul').hide();
+	}
 	
 	/*Submit value*/
-	submitSelect = function(submitMe){
-		var 
-			langCode = submitMe.attr("class"),
-			langName = submitMe.text();
-
+	submitSelect = function(langName, langCode, cObj){
 		$.ajax({
-			url:'start/test/',
+			url:'index.php/languageController',
 			type:'POST',
 			data:{langCode:langCode, langName:langName},
+			dataType:'JSON',
 			success: function(data){
-				/*We send the data to the controller and get the value back*/
-				console.log(data);
+			/*We send the data to the controller and get the value back. When the value has arrived we call updateSelectvalue and send the value to update the menu*/
+				updateSelectedValue(data.langName, data.langCode, cObj);
 			}
 		});
 	}
 
-	$('ul.customizedSelect').find('li.openDropdown').click(function(){
+	var $dropdown = $('ul.customizedSelect').find('li.openDropdown');
+	$dropdown.click(function(){
 		obj = $(this);
 		dropDownShowHide(obj);
-	})
+	});
 	
 	/*Open/Close select list*/
 	dropDownShowHide = function(obj){
@@ -108,6 +114,33 @@ function initCustomizedSelectMenus(mySelectArr){
 			dropdown.hide();
 		}
 	}
+}
+
+function initStopEmptyLinks(){
+	var $link = $('a');
+	$link.click(function(e){
+		var href = $(this).attr('href');
+		if(href == "#" || href==""){
+			e.preventDefault();
+		}
+	});
+}
+
+function initDropdowns(){
+	var $triggerHolder = $('.trigger'),
+		targets = $('.target');
+	$triggerHolder.each(function(){
+		var 
+		trigger = $(this).find('.opener', $triggerHolder),
+		target = $(this).closest($triggerHolder).siblings(targets);
+		trigger.click(function(){
+			if(target.css('display')=='none'){
+				target.show();
+			}else{
+				target.hide();
+			}
+		});
+	});
 }
 
 /*
@@ -122,4 +155,13 @@ $(document).ready(function(){
 	 * You need to specify the exact select menu. I recomend use a id*/
 	var mySelectArr = [$("select#lang")];
 	initCustomizedSelectMenus(mySelectArr);
+	
+	/*Prevent empty links to submit*/
+	initStopEmptyLinks();
+	
+	/*Create dropdown menus
+	 * Whats important here is that when creating a dropdown we have to use a structure like the following
+	 * We need a div or what ever with a trigger class inside the trigger div we need to add a div or what ever
+	 * with a opener class. Outside the trigger div we will create our target(dropdown div).*/
+	initDropdowns();
 });
