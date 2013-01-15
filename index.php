@@ -1,6 +1,6 @@
 <?php
 
-/* Denna raden har jag commitat 2.39 lördag /Jörgen
+/* Installerat git p� PC
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
